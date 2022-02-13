@@ -8,36 +8,31 @@
       <thead>
         <tr>
           <th width="30%" scope="col">Nama</th>
-          <th width="12%" scope="col">Nilai Kuis</th>
-          <th width="12%" scope="col">Nilai UTS</th>
-          <th width="12%" scope="col">Nilai UAS</th>
-          <th width="12%" scope="col">Nilai Angka</th>
-          <th width="12%" scope="col">Nilai Huruf</th>
+          <th width="16%" scope="col">Nilai UTS</th>
+          <th width="16%" scope="col">Nilai UAS</th>
+          <th width="16%" scope="col">Nilai Angka</th>
+          <th width="12%" scope="col">Predikat</th>
           <th width="10%" scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(nilai, index) in formSiswa" :key="index">
-          <td width="30%">
+          <td>
             <input class="name-siswa" type="text" v-model="nilai.nama">
           </td>
-          <td width="12%">
-            <input type="number" v-model="nilai.kuis">
-          </td>
-          <td width="12%">
+          <td>
             <input type="number" v-model="nilai.uts">
           </td>
-          <td width="12%">
+          <td>
             <input type="number" v-model="nilai.uas">
           </td>
-          <td width="12%">
-            <span>{{nilai.total}}</span>
+          <td>
+            <span>{{ ((parseInt(nilai.uts) + parseInt(nilai.uas))/2).toFixed(1) }}</span>
           </td>
-          <td width="12%">
-            <span>{{nilai.huruf}}</span>
-          </td>
-          <td width="10%">
-            <button>Tambah</button>
+          <td></td>
+          <td>
+            <button style="margin-right:5px" @click="delNilai(index)"><i class="fa fa-minus"></i></button>
+            <button @click="addNilai"><i class="fa fa-plus"></i></button>
           </td>
         </tr>
       </tbody>
@@ -54,16 +49,22 @@ export default {
     return {
       formSiswa: [{
           nama: '',
-          kuis: 0,
           uts: 0,
           uas: 0,
-          total: 0,
-          huruf: ''
       }]
     };
   },
   methods: {
-    
+      addNilai: function(){
+          this.formSiswa.push({
+            nama: '',
+            uts: 0,
+            uas: 0,
+        })
+      },
+      delNilai: function(index){
+          this.formSiswa.splice(index,1)
+      }
   },
 };
 </script>
